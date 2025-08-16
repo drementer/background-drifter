@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    // File Layout
+    // "rootDir": "/.",
+    // "outDir": "./",
+
+    // Environment Settings
+    // See also https://aka.ms/tsconfig/module
+    "module": "es2015",
+    "target": "esnext",
+    "types": [],
+
+    // Other Outputs
+    "sourceMap": false,
+    "declaration": false,
+    "declarationMap": false,
+
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
+    // Recommended Options
+    "strict": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true
+  }
+}
