@@ -3,23 +3,261 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Background Drifter - Interactive Parallax Effect</title>
 
-    <link rel="stylesheet" href="./assets/style.css" />
-    <script type="module" src="./assets/backgroundParallax.js"></script>
+    <link rel="stylesheet" href="./assets/scss/main.scss" />
+    <script defer type="module" src="./assets/ts/main.ts"></script>
   </head>
   <body>
+    <div class="open-overlay"></div>
     <header>
-      <section class="background-stuff-wrapper">
-        <div class="background-stuff" background-stuff>
-          <img src="./assets/bg.jpg" alt="background" />
+      <section class="parallax-section" parallax-section>
+        <div class="parallax-background" parallax-background>
+          <a href="#1" class="parallax-element" parallax-element>
+            <img
+              src="https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e1f86f3c86d869d5c41_Clou_Canvas-New-Hope.jpg"
+              loading="eager"
+              alt="Thumbnail 13"
+              sizes="(max-width: 991px) 40vw, 20vw"
+              srcset="
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e1f86f3c86d869d5c41_Clou_Canvas-New-Hope-p-500.jpg   500w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e1f86f3c86d869d5c41_Clou_Canvas-New-Hope-p-800.jpg   800w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e1f86f3c86d869d5c41_Clou_Canvas-New-Hope-p-1080.jpg 1080w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e1f86f3c86d869d5c41_Clou_Canvas-New-Hope.jpg        1280w
+              "
+              class="canvas-card_image"
+            />
+          </a>
+
+          <a href="#2" class="parallax-element" parallax-element>
+            <img
+              src="https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/6792613a5d497ebec43738c6_RZ_Clou_Portfolio_LIV_Achte_auf_dich_Home_04_Tiny.jpg"
+              loading="eager"
+              alt="Thumbnail 11"
+              sizes="(max-width: 991px) 40vw, 20vw"
+              srcset="
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/6792613a5d497ebec43738c6_RZ_Clou_Portfolio_LIV_Achte_auf_dich_Home_04_Tiny-p-500.jpg  500w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/6792613a5d497ebec43738c6_RZ_Clou_Portfolio_LIV_Achte_auf_dich_Home_04_Tiny-p-800.jpg  800w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/6792613a5d497ebec43738c6_RZ_Clou_Portfolio_LIV_Achte_auf_dich_Home_04_Tiny.jpg       1080w
+              "
+              class="canvas-card_image"
+            />
+          </a>
+
+          <a href="#3" class="parallax-element" parallax-element>
+            <img
+              src="https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e40966b042051b90fb8_Clou_Canvas-Charles-Nguela.jpg"
+              loading="eager"
+              alt="Thumbnail 10"
+              sizes="(max-width: 991px) 40vw, 20vw"
+              srcset="
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e40966b042051b90fb8_Clou_Canvas-Charles-Nguela-p-500.jpg   500w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e40966b042051b90fb8_Clou_Canvas-Charles-Nguela-p-800.jpg   800w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e40966b042051b90fb8_Clou_Canvas-Charles-Nguela-p-1080.jpg 1080w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e40966b042051b90fb8_Clou_Canvas-Charles-Nguela.jpg        1280w
+              "
+              class="canvas-card_image"
+            />
+          </a>
+
+          <a href="#4" class="parallax-element" parallax-element>
+            <img
+              src="https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/685d53d9bc63d9b6aa4bed95_RZ_Clou_Portfolio_TFL_Tiny.jpg"
+              loading="eager"
+              alt="Thumbnail 14"
+              sizes="(max-width: 991px) 40vw, 20vw"
+              srcset="
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/685d53d9bc63d9b6aa4bed95_RZ_Clou_Portfolio_TFL_Tiny-p-500.jpg  500w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/685d53d9bc63d9b6aa4bed95_RZ_Clou_Portfolio_TFL_Tiny-p-800.jpg  800w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/685d53d9bc63d9b6aa4bed95_RZ_Clou_Portfolio_TFL_Tiny.jpg       1080w
+              "
+              class="canvas-card_image"
+            />
+          </a>
+
+          <a href="#5" class="parallax-element" parallax-element>
+            <img
+              src="https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e882afc6a8848e76033_Clou_Canvas-Stans-Lacht.jpg"
+              loading="eager"
+              alt="Thumbnail 01"
+              sizes="(max-width: 991px) 40vw, 20vw"
+              srcset="
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e882afc6a8848e76033_Clou_Canvas-Stans-Lacht-p-500.jpg   500w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e882afc6a8848e76033_Clou_Canvas-Stans-Lacht-p-800.jpg   800w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e882afc6a8848e76033_Clou_Canvas-Stans-Lacht-p-1080.jpg 1080w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e882afc6a8848e76033_Clou_Canvas-Stans-Lacht.jpg        1280w
+              "
+              class="canvas-card_image"
+            />
+          </a>
+
+          <a href="#6" class="parallax-element" parallax-element>
+            <img
+              src="https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e27f634a4a4761eb4ad_Clou_Canvas-BelArosa-Chalet.jpg"
+              loading="eager"
+              alt="Thumbnail 12"
+              sizes="(max-width: 991px) 40vw, 20vw"
+              srcset="
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e27f634a4a4761eb4ad_Clou_Canvas-BelArosa-Chalet-p-500.jpg   500w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e27f634a4a4761eb4ad_Clou_Canvas-BelArosa-Chalet-p-800.jpg   800w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e27f634a4a4761eb4ad_Clou_Canvas-BelArosa-Chalet-p-1080.jpg 1080w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e27f634a4a4761eb4ad_Clou_Canvas-BelArosa-Chalet.jpg        1280w
+              "
+              class="canvas-card_image"
+            />
+          </a>
+
+          <a href="#7" class="parallax-element" parallax-element>
+            <img
+              src="https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e82c8259eeb5be828b6_Clou_Canvas-Spinnerei.jpg"
+              loading="eager"
+              alt="Thumbnail 02"
+              sizes="(max-width: 991px) 40vw, 20vw"
+              srcset="
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e82c8259eeb5be828b6_Clou_Canvas-Spinnerei-p-500.jpg   500w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e82c8259eeb5be828b6_Clou_Canvas-Spinnerei-p-800.jpg   800w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e82c8259eeb5be828b6_Clou_Canvas-Spinnerei-p-1080.jpg 1080w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e82c8259eeb5be828b6_Clou_Canvas-Spinnerei.jpg        1280w
+              "
+              class="canvas-card_image"
+            />
+          </a>
+
+          <a href="#8" class="parallax-element" parallax-element>
+            <img
+              src="https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e52ade312753d5f2878_Clou_Canvas-Vitality-Cards.jpg"
+              loading="eager"
+              alt="Thumbnail 08"
+              sizes="(max-width: 991px) 40vw, 20vw"
+              srcset="
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e52ade312753d5f2878_Clou_Canvas-Vitality-Cards-p-500.jpg   500w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e52ade312753d5f2878_Clou_Canvas-Vitality-Cards-p-800.jpg   800w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e52ade312753d5f2878_Clou_Canvas-Vitality-Cards-p-1080.jpg 1080w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e52ade312753d5f2878_Clou_Canvas-Vitality-Cards.jpg        1280w
+              "
+              class="canvas-card_image"
+            />
+          </a>
+
+          <a href="#9" class="parallax-element" parallax-element>
+            <img
+              src="https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e7cc8bfba6d6cb0a1d0_Clou_Canvas-Sachaklemm.jpg"
+              loading="eager"
+              alt="Thumbnail 03"
+              sizes="(max-width: 991px) 40vw, 20vw"
+              srcset="
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e7cc8bfba6d6cb0a1d0_Clou_Canvas-Sachaklemm-p-500.jpg   500w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e7cc8bfba6d6cb0a1d0_Clou_Canvas-Sachaklemm-p-800.jpg   800w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e7cc8bfba6d6cb0a1d0_Clou_Canvas-Sachaklemm-p-1080.jpg 1080w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e7cc8bfba6d6cb0a1d0_Clou_Canvas-Sachaklemm.jpg        1280w
+              "
+              class="canvas-card_image"
+            />
+          </a>
+
+          <a href="#10" class="parallax-element" parallax-element>
+            <img
+              src="https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e0a059ea93d0fb2bc73_Clou_Canvas-Arcon.jpg"
+              loading="eager"
+              alt="Thumbnail 15"
+              sizes="(max-width: 991px) 40vw, 20vw"
+              srcset="
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e0a059ea93d0fb2bc73_Clou_Canvas-Arcon-p-500.jpg   500w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e0a059ea93d0fb2bc73_Clou_Canvas-Arcon-p-800.jpg   800w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e0a059ea93d0fb2bc73_Clou_Canvas-Arcon-p-1080.jpg 1080w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e0a059ea93d0fb2bc73_Clou_Canvas-Arcon.jpg        1280w
+              "
+              class="canvas-card_image"
+            />
+          </a>
+
+          <a href="#11" class="parallax-element" parallax-element>
+            <img
+              src="https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e4b966b042051b9156f_Clou_Canvas-Lostly.jpg"
+              loading="eager"
+              alt="Thumbnail 09"
+              sizes="(max-width: 991px) 40vw, 20vw"
+              srcset="
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e4b966b042051b9156f_Clou_Canvas-Lostly-p-500.jpg   500w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e4b966b042051b9156f_Clou_Canvas-Lostly-p-800.jpg   800w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e4b966b042051b9156f_Clou_Canvas-Lostly-p-1080.jpg 1080w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e4b966b042051b9156f_Clou_Canvas-Lostly.jpg        1280w
+              "
+              class="canvas-card_image"
+            />
+          </a>
+
+          <a href="#12" class="parallax-element" parallax-element>
+            <img
+              src="https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e630aae6142f4b68632_Clou_Canvas-Die-Goettliche-Ordnung.jpg"
+              loading="eager"
+              alt="Thumbnail 06"
+              sizes="(max-width: 991px) 40vw, 20vw"
+              srcset="
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e630aae6142f4b68632_Clou_Canvas-Die-Goettliche-Ordnung-p-500.jpg   500w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e630aae6142f4b68632_Clou_Canvas-Die-Goettliche-Ordnung-p-800.jpg   800w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e630aae6142f4b68632_Clou_Canvas-Die-Goettliche-Ordnung-p-1080.jpg 1080w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e630aae6142f4b68632_Clou_Canvas-Die-Goettliche-Ordnung.jpg        1280w
+              "
+              class="canvas-card_image"
+            />
+          </a>
+
+          <a href="#13" class="parallax-element" parallax-element>
+            <img
+              src="https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e6c5240bf0d97fdef51_Clou_Canvas-TCS-Iceteam.jpg"
+              loading="eager"
+              alt="Thumbnail 05"
+              sizes="(max-width: 991px) 40vw, 20vw"
+              srcset="
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e6c5240bf0d97fdef51_Clou_Canvas-TCS-Iceteam-p-500.jpg   500w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e6c5240bf0d97fdef51_Clou_Canvas-TCS-Iceteam-p-800.jpg   800w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e6c5240bf0d97fdef51_Clou_Canvas-TCS-Iceteam-p-1080.jpg 1080w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e6c5240bf0d97fdef51_Clou_Canvas-TCS-Iceteam.jpg        1280w
+              "
+              class="canvas-card_image"
+            />
+          </a>
+
+          <a href="#14" class="parallax-element" parallax-element>
+            <img
+              src="https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e733244c9eb3d3ffa63_Clou_Canvas-Loris-Mate.jpg"
+              loading="eager"
+              alt="Thumbnail 04"
+              sizes="(max-width: 991px) 40vw, 20vw"
+              srcset="
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e733244c9eb3d3ffa63_Clou_Canvas-Loris-Mate-p-500.jpg   500w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e733244c9eb3d3ffa63_Clou_Canvas-Loris-Mate-p-800.jpg   800w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e733244c9eb3d3ffa63_Clou_Canvas-Loris-Mate-p-1080.jpg 1080w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e733244c9eb3d3ffa63_Clou_Canvas-Loris-Mate.jpg        1280w
+              "
+              class="canvas-card_image"
+            />
+          </a>
+
+          <a href="#15" class="parallax-element" parallax-element>
+            <img
+              src="https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e5d29ee280117f3ef87_Clou_Canvas-Beialge-Magazin.jpg"
+              loading="eager"
+              alt="Thumbnail 07"
+              sizes="(max-width: 991px) 40vw, 20vw"
+              srcset="
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e5d29ee280117f3ef87_Clou_Canvas-Beialge-Magazin-p-500.jpg   500w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e5d29ee280117f3ef87_Clou_Canvas-Beialge-Magazin-p-800.jpg   800w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e5d29ee280117f3ef87_Clou_Canvas-Beialge-Magazin-p-1080.jpg 1080w,
+                https://cdn.prod.website-files.com/65dc5814c929e36853491dc5/66389e5d29ee280117f3ef87_Clou_Canvas-Beialge-Magazin.jpg        1280w
+              "
+              class="canvas-card_image"
+            />
+          </a>
         </div>
       </section>
-      <h1>CLOU</h1>
+
+      <h1 class="text-animate" text-animate>CLOU</h1>
     </header>
 
     <main>
-      <h1>Main</h1>
+      <h1>MAIN</h1>
     </main>
   </body>
 </html>

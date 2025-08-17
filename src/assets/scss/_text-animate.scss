@@ -1,0 +1,12 @@
+.text-animate {
+  display: block;
+}
+
+.text-animate-wrapper {
+  overflow: hidden;
+  display: block;
+
+  span {
+    display: inline-block;
+  }
+}

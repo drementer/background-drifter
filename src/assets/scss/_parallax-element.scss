@@ -1,0 +1,192 @@
+.parallax-element {
+  z-index: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: absolute;
+  flex: 0 0 auto;
+  border-radius: 0.5rem;
+  overflow: hidden;
+
+  &:nth-child(1) {
+    width: 20vw;
+    left: 5%;
+    top: 12%;
+  }
+
+  &:nth-child(2) {
+    width: 15vw;
+    left: 20%;
+    top: 25%;
+  }
+
+  &:nth-child(3) {
+    width: 17.5vw;
+    left: 40%;
+    top: 17.5%;
+  }
+
+  &:nth-child(4) {
+    width: 15vw;
+    left: 65%;
+    top: 13.5%;
+  }
+
+  &:nth-child(5) {
+    width: 20vw;
+    left: 85%;
+    top: 22.5%;
+  }
+
+  &:nth-child(6) {
+    width: 15vw;
+    left: 7.5%;
+    top: 40%;
+  }
+
+  &:nth-child(7) {
+    width: 17.5vw;
+    left: 25%;
+    top: 50%;
+  }
+
+  &:nth-child(8) {
+    width: 15vw;
+    left: 55%;
+    top: 35%;
+  }
+
+  &:nth-child(9) {
+    width: 20vw;
+    left: 65%;
+    top: 55.5%;
+  }
+
+  &:nth-child(10) {
+    width: 17.5vw;
+    left: 80%;
+    top: 40%;
+  }
+
+  &:nth-child(11) {
+    width: 20vw;
+    left: 6%;
+    top: 75%;
+  }
+
+  &:nth-child(12) {
+    width: 15vw;
+    left: 27.5%;
+    top: 85%;
+  }
+
+  &:nth-child(13) {
+    width: 17.5vw;
+    left: 38.5%;
+    top: 67.5%;
+  }
+
+  &:nth-child(14) {
+    width: 20vw;
+    left: 57.5%;
+    top: 80%;
+  }
+
+  &:nth-child(15) {
+    width: 20vw;
+    left: 82.5%;
+    top: 75.5%;
+  }
+
+  @media screen and (max-width: 768px) {
+    &:nth-child(1) {
+      width: 37.5w;
+      left: 5%;
+      top: 12%;
+    }
+
+    &:nth-child(2) {
+      width: 32.5vw;
+      left: 20%;
+      top: 25%;
+    }
+
+    &:nth-child(3) {
+      width: 35vw;
+      left: 40%;
+      top: 17.5%;
+    }
+
+    &:nth-child(4) {
+      width: 32.5vw;
+      left: 65%;
+      top: 13.5%;
+    }
+
+    &:nth-child(5) {
+      width: 37.5vw;
+      left: 85%;
+      top: 22.5%;
+    }
+
+    &:nth-child(6) {
+      width: 32.5vw;
+      left: 7.5%;
+      top: 40%;
+    }
+
+    &:nth-child(7) {
+      width: 35vw;
+      left: 25%;
+      top: 50%;
+    }
+
+    &:nth-child(8) {
+      width: 32.5vw;
+      left: 55%;
+      top: 35%;
+    }
+
+    &:nth-child(9) {
+      width: 40vw;
+      left: 65%;
+      top: 55.5%;
+    }
+
+    &:nth-child(10) {
+      width: 35vw;
+      left: 80%;
+      top: 40%;
+    }
+
+    &:nth-child(11) {
+      width: 37.5vw;
+      left: 6%;
+      top: 75%;
+    }
+
+    &:nth-child(12) {
+      width: 32.5vw;
+      left: 27.5%;
+      top: 85%;
+    }
+
+    &:nth-child(13) {
+      width: 35vw;
+      left: 38.5%;
+      top: 67.5%;
+    }
+
+    &:nth-child(14) {
+      width: 37.5vw;
+      left: 57.5%;
+      top: 80%;
+    }
+
+    &:nth-child(15) {
+      width: 37.5vw;
+      left: 82.5%;
+      top: 75.5%;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+.open-overlay {
+  pointer-events: none;
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+
+  background-color: black;
+
+  animation-name: close-overlay;
+  animation-duration: 500ms;
+  animation-delay: 500ms;
+  transition-timing-function: cubic-bezier(1, -0.4, 0.35, 0.95);
+  animation-fill-mode: forwards;
+
+  @keyframes close-overlay {
+    to {
+      transform: translate(0, -100%);
+    }
+  }
+}

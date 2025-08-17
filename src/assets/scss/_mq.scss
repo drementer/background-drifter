@@ -1,0 +1,110 @@
+/// A collection of media breakpoints.
+/// @type Map
+$breakpoints: (
+  xs: 360,
+  sm: 576,
+  md: 768,
+  lg: 992,
+  xl: 1200,
+  ul: 1400,
+) !default;
+
+/// @type String
+$media-type: screen !default;
+
+/// Retrieves the value of a breakpoint from the breakpoints map.
+///
+/// @param {String} $value - The key or value of the breakpoint.
+///
+/// @access private
+///
+/// @return {Number} The corresponding value of the breakpoint.
+///
+@function get-breakpoint($value) {
+  @if map-has-key($breakpoints, $value) {
+    @return map-get($breakpoints, $value);
+  }
+
+  @error '#{$value} does not exist in $breakpoints!!!';
+}
+
+/// Checks the provided value and converts it to a valid breakpoint value.
+///
+/// @param {String|Number} $value - The value to check.
+///
+/// @access private
+///
+/// @return {Number} The valid breakpoint value.
+///
+@function get-value($value) {
+  @if $value == null or $value == "" {
+    @return false;
+  }
+
+  @if type-of($value) == string {
+    $value: get-breakpoint($value);
+  }
+
+  @if unitless($value) {
+    $value: $value * 1px;
+  }
+
+  @return $value;
+}
+
+/// Generates a media query mixin based on the provided minimum and maximum breakpoints.
+///
+/// @param {Number|Null} $min - The minimum breakpoint value.
+/// @param {Number|Null} $max - The maximum breakpoint value.
+///
+@mixin mq($min: null, $max: null, $and: null, $media-type: $media-type) {
+  $min-width: get-value($min);
+  $max-width: get-value($max);
+  $media-query: ();
+
+  @if $min-width {
+    $media-query: join($media-query, "(min-width: #{$min-width})", auto);
+  }
+
+  @if $max-width {
+    $media-query: join($media-query, "(max-width: #{$max-width - 0.01})", auto);
+  }
+
+  @if $min-width and $max-width {
+    $media-query: "#{nth($media-query, 1)} and #{nth($media-query, 2)}";
+  }
+
+  @if length($media-query) == 0 {
+    @error 'No valid breakpoints provided!!!';
+  }
+
+  @if $and {
+    $media-query: "#{$media-query} and #{$and}";
+  }
+
+  @if $media-type {
+    $media-query: "#{$media-type} and #{$media-query}";
+  }
+
+  @media #{$media-query} {
+    @content;
+  }
+}
+
+@mixin range-mq($min, $max) {
+  @include mq($min, $max) {
+    @content;
+  }
+}
+
+@mixin min-mq($min) {
+  @include mq($min, null) {
+    @content;
+  }
+}
+
+@mixin max-mq($max) {
+  @include mq(null, $max) {
+    @content;
+  }
+}

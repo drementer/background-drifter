@@ -1,13 +1,21 @@
 {
-  "name": "clou",
+  "name": "background-drifter",
   "version": "1.0.0",
-  "description": "",
+  "description": "Interactive parallax background effect with smooth mouse tracking",
   "license": "ISC",
-  "author": "",
-  "type": "commonjs",
-  "main": "index.js",
+  "author": "drementer",
+  "type": "module",
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "sass": "^1.69.5",
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "gsap": "^3.13.0"
   }
 }
