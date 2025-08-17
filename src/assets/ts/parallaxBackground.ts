@@ -5,9 +5,7 @@ import { animateParallaxElements } from './parallaxElements';
 import { getInitialMousePosition } from './mouseTracker';
 
 /**
- * ===============================================
  * 🎨 PARALLAX MOUSE TRACKING EFFECT
- * ===============================================
  *
  * WHAT THIS DOES:
  * Creates a smooth parallax effect where the background image subtly moves
@@ -28,12 +26,14 @@ import { getInitialMousePosition } from './mouseTracker';
  * Step 1: CENTERING (Make middle = zero)
  * Step 2: NORMALIZING (Scale to -1 and +1 range)
  * Step 3: SCALING (Apply real movement distance in vw/vh units)
+ * Step 4: CONVERT VW/VH TO PIXELS (For 'quickTo' compatibility)
  *
  * EXAMPLE: Mouse at right edge of 1920px screen
  * Step 1: 1920/1920 = 1.0 → 1.0 - 0.5 = 0.5 (centered)
  * Step 2: 0.5 × 2 = 1.0 (normalized to full range)
  * Step 3: 1.0 × 75 = 75vw (final movement distance)
- * Result: Background moves 75vw to the LEFT (opposite direction)
+ * Step 4: 75vw/100 × 1920px = 1440px (final movement distance in pixels)
+ * Result: Background moves 1440px (75vw) to the LEFT (opposite direction)
  */
 
 const elementWrapper = document.querySelector(
@@ -48,6 +48,16 @@ if (!elementWrapper) {
     "Background element with attribute '[parallax-section]' not found!"
   );
 }
+
+const gsapSettings = {
+  duration: 0.5,
+  ease: 'power2.out',
+};
+
+const setter = {
+  x: gsap.quickTo(element, 'x', gsapSettings),
+  y: gsap.quickTo(element, 'y', gsapSettings),
+};
 
 // Target position (where we want the background to be)
 let targetBackgroundX: number = 0;
@@ -161,24 +171,28 @@ const calculateMovement = (
   const horizontalMovement = normalizedX * parallaxConfig.maxMovementX;
   const verticalMovement = normalizedY * parallaxConfig.maxMovementY;
 
+  /**
+   * STEP 4: CONVERT VW/VH TO PIXELS
+   *
+   * Convert vw/vh values to pixels for quickTo compatibility
+   * Problem: quickTo only accepts pixels, not vw/vh
+   * Solution: Convert to pixels using window.innerWidth/Height
+   */
+  const targetXInPx = (horizontalMovement / 100) * window.innerWidth;
+  const targetYInPx = (verticalMovement / 100) * window.innerHeight;
+
   // Set new target positions (negative for opposite direction effect)
-  targetBackgroundX = -horizontalMovement;
-  targetBackgroundY = -verticalMovement;
+  targetBackgroundX = -targetXInPx;
+  targetBackgroundY = -targetYInPx;
 };
 
 /**
  * Animates background to target position using GSAP
+ * Converts vw/vh values to pixels for quickTo compatibility
  */
 const animateBackgroundToTarget = (): void => {
-  const settings = {
-    x: `${targetBackgroundX}vw`,
-    y: `${targetBackgroundY}dvh`,
-    duration: parallaxConfig.animationDuration,
-    ease: 'power2.out', // Similar to easeInOutSine
-    overwrite: true, // Cancel previous animations
-  };
-
-  gsap.to(element, settings);
+  setter.x(targetBackgroundX);
+  setter.y(targetBackgroundY);
 };
 
 /**
