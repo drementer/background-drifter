@@ -50,7 +50,7 @@ if (!elementWrapper) {
 }
 
 const gsapSettings = {
-  duration: 0.5,
+  duration: 0.75,
   ease: 'power2.out',
 };
 
@@ -210,8 +210,11 @@ const onMouseMove = (mouseEvent: MouseEvent): void => {
 
 const setStartPosition = async (): Promise<void> => {
   const { x, y } = await getInitialMousePosition();
-  calculateMovement(x, y);
-  animateBackgroundToTarget();
+
+  setTimeout(() => {
+    calculateMovement(x, y);
+    animateBackgroundToTarget();
+  }, 750);
 };
 
 const initParallaxBackground = async () => {
