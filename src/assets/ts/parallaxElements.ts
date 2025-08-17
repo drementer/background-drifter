@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 
-const parallaxElements = document.querySelectorAll('[parallax-element]');
+const parallaxElements = document.querySelectorAll('[parallax-element-wrapper]');
 
 const settings = {
   duration: 0.75,
