@@ -1,5 +1,9 @@
 .text-animate {
+  z-index: 1;
+  position: relative;
   display: block;
+  pointer-events: none;
+  user-select: none;
 }
 
 .text-animate-wrapper {

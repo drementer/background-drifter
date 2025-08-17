@@ -1,7 +1,7 @@
 .parallax-section {
   overflow: hidden;
 
-  z-index: -1;
+  z-index: 1;
   position: absolute;
   inset: 0;
 
@@ -10,7 +10,7 @@
 }
 
 .parallax-background {
-  z-index: -1;
+  z-index: 1;
 
   position: absolute;
   top: -75dvh;
@@ -18,8 +18,6 @@
 
   width: 250vw;
   height: 250dvh;
-
-  background-color: #ffffff;
 
   /* No CSS transition - handled by JS */
 }

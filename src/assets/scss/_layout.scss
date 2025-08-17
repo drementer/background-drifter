@@ -1,8 +1,15 @@
 html,
 body {
-  overflow-x: hidden;
-  width: 100vw;
+  width: 100%;
   overflow-anchor: none;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-y: hidden;
 }
 
 header {
@@ -13,9 +20,12 @@ header {
   justify-content: center;
   align-items: center;
 
-  width: 100vw;
+  width: 100%;
   height: 100dvh;
-  color: orange;
+
+  h1 {
+    color: #000000;
+  }
 }
 
 main {
@@ -24,30 +34,14 @@ main {
   align-items: flex-start;
 
   width: 100%;
-  height: 300vh;
-  background-color: orange;
+  min-height: 300vh;
   color: #fff;
 }
 
 h1 {
   font-family: Athletics, sans-serif;
-  color: #000000;
-  letter-spacing: -0.5vw;
-  margin-bottom: 0;
-  font-size: 20vw;
+  font-size: 10vw;
   font-weight: 500;
-  line-height: 90%;
+  line-height: 1.2;
   text-align: center;
-}
-
-@media screen and (max-width: 991px) {
-  h1 {
-    font-size: 25vw;
-  }
-}
-
-@media screen and (max-width: 479px) {
-  h1 {
-    font-size: 30vw;
-  }
 }
