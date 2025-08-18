@@ -1,5 +1,5 @@
 import { gsap } from 'gsap';
-import { observer } from '../utils/observer';
+import { intersectionObserver } from '../utils/intersectionObserver';
 
 /**
  * 🖱️ SIMPLE MOUSE PARALLAX
@@ -43,7 +43,7 @@ class MouseParallax {
       this.elementSetters.set(element, { x: xSetter, y: ySetter });
 
       // Set up observer for visibility tracking
-      observer(element, this.onElementVisibilityChange.bind(this), {
+      intersectionObserver(element, this.onElementVisibilityChange.bind(this), {
         threshold: 0.1,
       });
     });

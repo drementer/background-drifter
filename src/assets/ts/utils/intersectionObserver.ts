@@ -1,4 +1,4 @@
-const observer = (
+const intersectionObserver = (
   item: HTMLElement,
   callback: Function,
   settings: IntersectionObserverInit
@@ -10,4 +10,4 @@ const observer = (
   observer.observe(item);
 };
 
-export { observer };
+export { intersectionObserver };
