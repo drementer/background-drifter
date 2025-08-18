@@ -1,7 +1,6 @@
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 
-// Register the SplitText plugin
 gsap.registerPlugin(SplitText);
 
 const headingElement = document.querySelector('[text-animate]') as HTMLElement;
@@ -20,8 +19,11 @@ const animationSettings = {
 };
 
 const createTextAnimation = () => {
+  if (!headingElement) return console.warn('No heading element found');
+
   const splitText = new SplitText(headingElement, { type: 'chars' });
   const { chars } = splitText;
+
   timeLine.from(chars, animationSettings);
 };
 

@@ -1,6 +1,8 @@
 import { gsap } from 'gsap';
 
-const parallaxElements = document.querySelectorAll('[parallax-element-wrapper]');
+const parallaxElements = document.querySelectorAll(
+  '[parallax-element-wrapper]'
+);
 
 const settings = {
   duration: 0.75,
@@ -15,6 +17,7 @@ const settings = {
 };
 
 const animateParallaxElements = () => {
+  if (!parallaxElements) return console.warn('No parallax elements found');
   gsap.from(parallaxElements, settings as gsap.TweenVars);
 };
 
