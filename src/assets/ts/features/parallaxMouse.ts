@@ -1,5 +1,5 @@
 import { gsap } from 'gsap';
-import { observer } from './observer';
+import { observer } from '../utils/observer';
 
 /**
  * 🖱️ SIMPLE MOUSE PARALLAX
