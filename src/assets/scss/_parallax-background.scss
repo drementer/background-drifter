@@ -19,5 +19,7 @@
   width: 250vw;
   height: 250dvh;
 
+  will-change: transform;
+
   /* No CSS transition - handled by JS */
 }

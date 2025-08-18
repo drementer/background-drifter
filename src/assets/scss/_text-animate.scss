@@ -4,6 +4,8 @@
   display: block;
   pointer-events: none;
   user-select: none;
+
+  will-change: transform;
 }
 
 .text-animate-wrapper {
