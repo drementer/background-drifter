@@ -174,12 +174,12 @@ const calculateMovement = (
   /**
    * STEP 4: CONVERT VW/VH TO PIXELS
    *
-   * Convert vw/vh values to pixels for quickTo compatibility
-   * Problem: quickTo only accepts pixels, not vw/vh
-   * Solution: Convert to pixels using window.innerWidth/Height
+   * Convert vw/vh values to pixels for 'quickTo' compatibility
+   * Problem: 'quickTo' only accepts pixels, not vw/vh
+   * Solution: Convert to pixels using screenWidth/screenHeight
    */
-  const targetXInPx = (horizontalMovement / 100) * window.innerWidth;
-  const targetYInPx = (verticalMovement / 100) * window.innerHeight;
+  const targetXInPx = (horizontalMovement / 100) * screenWidth;
+  const targetYInPx = (verticalMovement / 100) * screenHeight;
 
   // Set new target positions (negative for opposite direction effect)
   targetBackgroundX = -targetXInPx;
