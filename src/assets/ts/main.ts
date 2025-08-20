@@ -1,9 +1,7 @@
 import { createTextAnimation } from './features/textAnimate';
-import { initParallaxBackground } from './features/parallaxBackground';
-import { MouseParallax } from './features/parallaxMouse';
-
-const havePointer = window.matchMedia('(pointer:fine)').matches;
+import { createParallaxBackground } from './features/parallaxBackground';
+import { createMouseParallax } from './features/parallaxMouse';
 
 createTextAnimation();
-initParallaxBackground();
-if (havePointer) new MouseParallax();
+createParallaxBackground();
+createMouseParallax();

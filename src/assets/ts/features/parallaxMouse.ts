@@ -1,5 +1,6 @@
 import { gsap } from 'gsap';
 import { intersectionObserver } from '../utils/intersectionObserver';
+import { mouseTracker } from '../utils/mouseTracker';
 
 /**
  * 🖱️ SIMPLE MOUSE PARALLAX
@@ -24,12 +25,12 @@ class MouseParallax {
     if (this.elements.length === 0) return;
 
     this.setupObservers();
-    this.setupMouseHandler();
+    mouseTracker.on('init', this.animateVisibleElements.bind(this));
+    mouseTracker.on('mousemove', this.animateVisibleElements.bind(this));
   }
 
   private setupObservers(): void {
-    this.elements.forEach((element) => {
-      // Create quickTo setters for this element
+    const createElementSetters = (element: HTMLElement) => {
       const xSetter = gsap.quickTo(element, 'x', {
         duration: 0.6,
         ease: 'power2.out',
@@ -41,55 +42,44 @@ class MouseParallax {
 
       // Store setters for this element
       this.elementSetters.set(element, { x: xSetter, y: ySetter });
-
-      // Set up observer for visibility tracking
-      intersectionObserver(element, this.onElementVisibilityChange.bind(this), {
-        threshold: 0.1,
-      });
-    });
-  }
-
-  private onElementVisibilityChange(entry: IntersectionObserverEntry): void {
-    const element = entry.target as HTMLElement;
-
-    if (entry.isIntersecting) {
-      this.visibleElements.add(element);
-    } else {
-      this.visibleElements.delete(element);
-    }
-  }
-
-  private setupMouseHandler(): void {
-    window.addEventListener('pointermove', (event) => this.onMouseMove(event));
-  }
-
-  private onMouseMove(event: PointerEvent): void {
-    if (!this.visibleElements.size) return;
-
-    const { x, y } = this.calculateMousePosition(event);
-    this.animateVisibleElements(x, y);
-  }
-
-  private calculateMousePosition(event: PointerEvent): {
-    x: number;
-    y: number;
-  } {
-    const { clientX, clientY } = event;
-    const { innerWidth, innerHeight } = window;
-
-    return {
-      x: (clientX / innerWidth - 0.5) * 40,
-      y: (clientY / innerHeight - 0.5) * 40,
     };
+
+    const onIntersection = (entry: IntersectionObserverEntry) => {
+      const element = entry.target as HTMLElement;
+      if (entry.isIntersecting) {
+        this.visibleElements.add(element);
+      } else {
+        this.visibleElements.delete(element);
+      }
+    };
+
+    const setUpElement = (element: HTMLElement) => {
+      createElementSetters(element);
+      intersectionObserver(element, onIntersection, { threshold: 0.1 });
+    };
+
+    this.elements.forEach(setUpElement);
   }
 
-  private animateVisibleElements(x: number, y: number): void {
-    this.visibleElements.forEach((element) => {
+  private animateVisibleElements(position: { x: number; y: number }): void {
+    const { x, y } = position;
+    const xMovement = x * 20;
+    const yMovement = y * 20;
+
+    const animateElements = (element: HTMLElement) => {
       const setters = this.elementSetters.get(element);
-      setters?.x(x);
-      setters?.y(y);
-    });
+
+      setters?.x(xMovement);
+      setters?.y(yMovement);
+    };
+
+    this.visibleElements.forEach(animateElements);
   }
 }
 
-export { MouseParallax };
+const createMouseParallax = () => {
+  const havePointer = window.matchMedia('(pointer:fine)').matches;
+  if (havePointer) new MouseParallax();
+};
+
+export { createMouseParallax };

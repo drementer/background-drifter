@@ -1,42 +1,55 @@
 import { EventEmitter } from './eventEmitter';
 
 /**
- * 🖱️ MOUSE TRACKER - Initial Position Detection
+ * 🖱️ MOUSE TRACKER — Initial + Active Tracking
  *
  * PURPOSE:
- * This module provides a way to get the initial mouse position when the page loads.
- * It's designed to be lightweight and only capture the position once, then clean up.
+ * 1. Detect the initial mouse position on page load (without user interaction)
+ * 2. Continuously track the active mouse position and emit updates
  *
- * WHY WE NEED THIS:
- * - On page load, we don't know where the mouse cursor is positioned
- * - We need this information for initial parallax effects or UI positioning
- * - Traditional mouse tracking is continuous and resource-intensive
- * - This gives us a one-time snapshot efficiently
+ * WHY:
+ * Browsers do not expose the cursor position until the user interacts with the page.
+ * This module ensures we obtain an initial position as soon as possible and then keep
+ * tracking changes efficiently.
  *
- * HOW IT WORKS:
- * 1. Creates a transparent overlay covering the entire viewport
- * 2. Listens for the first mouse/pointer event (mouseenter, mousemove, etc.)
- * 3. Captures the coordinates and immediately resolves the Promise
- * 4. Automatically cleans up the overlay and event listeners
+ * HOW:
+ * 1) Initial detection:
+ *    - Create a transparent full-viewport overlay element
+ *    - Since the mouse cursor is already positioned somewhere on the page,
+ *      the overlay will immediately trigger a 'mouseenter' event
+ *    - This gives us the mouse position without waiting for user movement
+ *    - Capture coordinates, emit 'init', then remove overlay and cleanup
+ * 2) Active tracking:
+ *    - Listen to 'pointermove' on window for ongoing position updates
+ *    - Calculate normalized coordinates and emit 'mousemove' events
  *
- * THE MATH BEHIND IT:
- * We need to convert mouse pixels into background movement distance.
- * This happens in 4 clear steps:
+ * OUTPUT:
+ * Normalized coordinates in range [-1, 1] for both x and y,
+ * where (0, 0) is the viewport center.
  *
- * Step 1: CENTERING (Make middle = zero)
- * Step 2: NORMALIZING (Scale to -1 and +1 range)
- * Step 3: SCALING (Apply real movement distance in px units)
+ * THE MATH (3 Steps to Convert Pixels to Normalized Coordinates):
  *
- * EXAMPLE: Mouse at right edge of 1920px screen
- * Step 1: 1920/1920 = 1.0 → 1.0 - 0.5 = 0.5 (centered)
- * Step 2: 0.5 × 2 = 1.0 (normalized to full range)
- * Step 3: 1.0 × 75(maxMovement) = 75px (final movement distance)
+ * STEP 1: PIXEL TO PERCENTAGE
+ * Convert mouse coordinates from pixels to percentages (0 to 1 range)
+ * - Formula: x/screenWidth, y/screenHeight
+ * - Result: 0 = left/top edge, 0.5 = center, 1 = right/bottom edge
+ *
+ * STEP 2: CENTER THE COORDINATE SYSTEM
+ * Shift coordinate system so center becomes (0,0) instead of (0.5,0.5)
+ * - Formula: percentage - 0.5
+ * - Result: -0.5 = left/top edge, 0 = center, +0.5 = right/bottom edge
+ *
+ * STEP 3: NORMALIZE TO FULL RANGE
+ * Expand from half-range (-0.5 to +0.5) to full range (-1 to +1)
+ * - Formula: centered × 2
+ * - Result: -1 = left/top edge, 0 = center, +1 = right/bottom edge
+ *
+ * Example (1920px width, mouse at right edge):
+ * Step 1: 1920/1920 = 1.0
+ * Step 2: 1.0 - 0.5 = 0.5
+ * Step 3: 0.5 × 2 = 1.0 (final normalized x coordinate)
  */
 
-/**
- * MouseTracker class handles the creation and cleanup of the overlay element
- * that captures the initial mouse position.
- */
 class MouseTracker extends EventEmitter {
   private overlayElement: HTMLElement | null = null;
   private mousePosition: { x: number; y: number } = { x: 0, y: 0 };
@@ -111,17 +124,21 @@ class MouseTracker extends EventEmitter {
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
 
+    // STEP 1: Convert pixels to percentage (0 to 1 range)
     const mouseXPercentage = x / screenWidth;
     const mouseYPercentage = y / screenHeight;
 
+    // STEP 2: Center coordinate system (make center = 0)
     const centeredMouseX = mouseXPercentage - 0.5;
     const centeredMouseY = mouseYPercentage - 0.5;
 
+    // STEP 3: Normalize to full range (-1 to +1)
     const normalizedX = centeredMouseX * 2;
     const normalizedY = centeredMouseY * 2;
 
-    this.mousePosition.x = normalizedX;
-    this.mousePosition.y = normalizedY;
+    // Limit to 2 decimal places to prevent floating point precision issues
+    this.mousePosition.x = parseFloat(normalizedX.toFixed(2));
+    this.mousePosition.y = parseFloat(normalizedY.toFixed(2));
   }
 
   private watchMousePosition(): void {

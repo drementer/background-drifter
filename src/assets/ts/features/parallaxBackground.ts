@@ -1,7 +1,7 @@
 import { gsap } from 'gsap';
 import { animateParallaxElements } from './parallaxElements';
 import { mouseTracker } from '../utils/mouseTracker';
-import { observer } from '../utils/observer';
+import { intersectionObserver } from '../utils/intersectionObserver';
 
 /**
  * 🎨 PARALLAX MOUSE TRACKING EFFECT
@@ -20,136 +20,138 @@ import { observer } from '../utils/observer';
  *
  * THE MATH BEHIND IT:
  * We need to convert mouse pixels into background movement distance.
- * This happens in 3 clear steps:
+ * This happens in 2 clear steps:
  *
- * Step 1: CENTERING (Make middle = zero)
- * Step 2: NORMALIZING (Scale to -1 and +1 range)
- * Step 3: SCALING (Apply real movement distance in vw/vh units)
- * Step 4: CONVERT VW/VH TO PIXELS (For 'quickTo' compatibility)
+ * STEP 1: APPLY REAL MOVEMENT DISTANCE
+ * Problem: -1 to +1 is just direction, we need actual percent units
+ * Solution: Multiply by maxMovement to get real distance
  *
- * EXAMPLE: Mouse at right edge of 1920px screen
- * Step 1: 1920/1920 = 1.0 → 1.0 - 0.5 = 0.5 (centered)
- * Step 2: 0.5 × 2 = 1.0 (normalized to full range)
- * Step 3: 1.0 × 75 = 75vw (final movement distance)
- * Step 4: 75vw/100 × 1920px = 1440px (final movement distance in pixels)
- * Result: Background moves 1440px (75vw) to the LEFT (opposite direction)
+ * EXAMPLES:
+ * (with maxMovementX = 75)
+ * - Full left (-1.0): -1.0 × 75 = -75% (background moves 75% RIGHT)
+ * - Half left (-0.5): -0.5 × 75 = -37.5% (background moves 37.5% RIGHT)
+ * - Center (0): 0 × 75 = 0% (background stays still)
+ * - Half right (+0.5): +0.5 × 75 = +37.5% (background moves 37.5% LEFT)
+ * - Full right (+1.0): +1.0 × 75 = +75% (background moves 75% LEFT)
+ * Final range: -75% to +75%
+ *
+ * STEP 2: CONVERT PERCENT TO PIXELS
+ * Convert percent values to pixels for 'quickTo' compatibility
+ * Problem: 'quickTo' only accepts pixels, not PERCENT
+ * Solution: Convert to pixels using screenWidth/screenHeight
+ *
+ * FINAL EXAMPLE: Mouse at right edge of 1920px screen
+ * Step 1: 1.0 × 75% = 75% (final movement distance)
+ * Step 2: 75% × 1920px = 1440px (final movement distance in pixels)
+ * Result: Background moves 1440px (75%) to the LEFT (opposite direction)
  */
 
-const backgroundWrapper = document.querySelector(
-  '[parallax-background-wrapper]'
-) as HTMLElement;
-const background = backgroundWrapper?.querySelector(
-  '[parallax-background]'
-) as HTMLElement;
+class ParallaxBackground {
+  private readonly backgroundWrapper: HTMLElement;
+  private readonly background: HTMLElement;
+  private readonly gsapSettings: { duration: number; ease: string };
+  private readonly setter: { x: gsap.QuickToFunc; y: gsap.QuickToFunc };
+  private readonly maxMovement: number = 75;
 
-if (!backgroundWrapper) {
-  throw new Error(
-    "Background element with attribute '[parallax-section]' not found!"
-  );
+  // Target position (where we want the background to be)
+  private targetBackgroundX: number = 0;
+  private targetBackgroundY: number = 0;
+
+  constructor() {
+    this.backgroundWrapper = document.querySelector(
+      '[parallax-background-wrapper]'
+    ) as HTMLElement;
+
+    this.background = this.backgroundWrapper.querySelector(
+      '[parallax-background]'
+    ) as HTMLElement;
+
+    this.gsapSettings = {
+      duration: 0.75,
+      ease: 'power2.out',
+    };
+
+    this.setter = {
+      x: gsap.quickTo(this.background, 'x', this.gsapSettings),
+      y: gsap.quickTo(this.background, 'y', this.gsapSettings),
+    };
+
+    if (!this.backgroundWrapper) {
+      console.warn(
+        "Background element with attribute '[parallax-background-wrapper]' not found!"
+      );
+      return;
+    }
+
+    if (!this.background) {
+      console.warn(
+        "Background element with attribute '[parallax-background]' not found!"
+      );
+      return;
+    }
+
+    this.init();
+  }
+
+  private calculateMovement(
+    mouseXPosition: number,
+    mouseYPosition: number
+  ): void {
+    // STEP 1: APPLY REAL MOVEMENT DISTANCE
+    const horizontalMovement = mouseXPosition * this.maxMovement;
+    const verticalMovement = mouseYPosition * this.maxMovement;
+
+    // STEP 2: CONVERT PERCENT TO PIXELS
+    const targetXInPx = (horizontalMovement / 100) * window.innerWidth;
+    const targetYInPx = (verticalMovement / 100) * window.innerHeight;
+
+    // Set new target positions (negative for opposite direction effect)
+    // Round to whole pixels for smooth animation
+    this.targetBackgroundX = -Math.round(targetXInPx);
+    this.targetBackgroundY = -Math.round(targetYInPx);
+  }
+
+  private animateBackgroundToTarget(): void {
+    this.setter.x(this.targetBackgroundX);
+    this.setter.y(this.targetBackgroundY);
+  }
+
+  private onMouseMove = (): void => {
+    const { x, y } = mouseTracker.getMousePosition();
+
+    this.calculateMovement(x, y);
+    this.animateBackgroundToTarget();
+  };
+
+  private setStartPosition = (position: { x: number; y: number }): void => {
+    const { x, y } = position;
+
+    setTimeout(() => {
+      this.calculateMovement(x, y);
+      this.animateBackgroundToTarget();
+    }, 750);
+  };
+
+  private watchIntersection = (entry: IntersectionObserverEntry): void => {
+    if (entry.isIntersecting) {
+      mouseTracker.on('mousemove', this.onMouseMove);
+    } else {
+      mouseTracker.off('mousemove', this.onMouseMove);
+    }
+  };
+
+  private init(): void {
+    animateParallaxElements();
+    mouseTracker.on('init', this.setStartPosition);
+
+    intersectionObserver(this.backgroundWrapper, this.watchIntersection, {
+      threshold: 0.1,
+    });
+  }
 }
 
-const gsapSettings = {
-  duration: 0.75,
-  ease: 'power2.out',
+const createParallaxBackground = () => {
+  return new ParallaxBackground();
 };
 
-const setter = {
-  x: gsap.quickTo(background, 'x', gsapSettings),
-  y: gsap.quickTo(background, 'y', gsapSettings),
-};
-
-// Target position (where we want the background to be)
-let targetBackgroundX: number = 0;
-let targetBackgroundY: number = 0;
-
-const maxMovement = 75;
-
-/**
- * Calculates the background movement based on mouse position
- * @param mouseXPosition - X coordinate of mouse in pixels
- * @param mouseYPosition - Y coordinate of mouse in pixels
- */
-const calculateMovement = (
-  mouseXPosition: number,
-  mouseYPosition: number
-): void => {
-  /**
-   * STEP 1: APPLY REAL MOVEMENT DISTANCE
-   *
-   * Problem: -1 to +1 is just direction, we need actual pixels/viewport units
-   * Solution: Multiply by maxMovement to get real distance
-   *
-   * Examples (with maxMovementX = 75vw):
-   * - Full left (-1.0): -1.0 × 75 = -75vw (background moves 75vw RIGHT)
-   * - Half left (-0.5): -0.5 × 75 = -37.5vw (background moves 37.5vw RIGHT)
-   * - Center (0): 0 × 75 = 0vw (background stays still)
-   * - Half right (+0.5): +0.5 × 75 = +37.5vw (background moves 37.5vw LEFT)
-   * - Full right (+1.0): +1.0 × 75 = +75vw (background moves 75vw LEFT)
-   *
-   * Final range: -75vw to +75vw
-   */
-  const horizontalMovement = mouseXPosition * maxMovement;
-  const verticalMovement = mouseYPosition * maxMovement;
-
-  /**
-   * STEP 2: CONVERT VW/VH TO PIXELS
-   *
-   * Convert vw/vh values to pixels for 'quickTo' compatibility
-   * Problem: 'quickTo' only accepts pixels, not vw/vh
-   * Solution: Convert to pixels using screenWidth/screenHeight
-   */
-  const targetXInPx = (horizontalMovement / 100) * window.innerWidth;
-  const targetYInPx = (verticalMovement / 100) * window.innerHeight;
-
-  // Set new target positions (negative for opposite direction effect)
-  targetBackgroundX = -targetXInPx;
-  targetBackgroundY = -targetYInPx;
-};
-
-/**
- * Animates background to target position using GSAP
- * Converts vw/vh values to pixels for quickTo compatibility
- */
-const animateBackgroundToTarget = (): void => {
-  setter.x(targetBackgroundX);
-  setter.y(targetBackgroundY);
-};
-
-/**
- * Handles mouse movement events and triggers background animation
- */
-const onMouseMove = (): void => {
-  const { x, y } = mouseTracker.getMousePosition();
-
-  calculateMovement(x, y);
-  animateBackgroundToTarget();
-};
-
-const setStartPosition = async (position: {
-  x: number;
-  y: number;
-}): Promise<void> => {
-  const { x, y } = position;
-
-  setTimeout(() => {
-    calculateMovement(x, y);
-    animateBackgroundToTarget();
-  }, 750);
-};
-
-const watchIntersection = (entry: IntersectionObserverEntry) => {
-  if (entry.isIntersecting) {
-    mouseTracker.on('mousemove', onMouseMove);
-  } else {
-    mouseTracker.off('mousemove', onMouseMove);
-  }
-};
-
-const initParallaxBackground = async () => {
-  animateParallaxElements();
-  mouseTracker.on('init', setStartPosition);
-
-  observer(backgroundWrapper, watchIntersection, { threshold: 0.1 });
-};
-
-export { initParallaxBackground };
+export { createParallaxBackground };
