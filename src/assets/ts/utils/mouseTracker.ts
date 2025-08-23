@@ -1,53 +1,30 @@
 import { EventEmitter } from './eventEmitter';
 
 /**
- * 🖱️ MOUSE TRACKER — Initial + Active Tracking
+ * 🖱️ MOUSE TRACKER
  *
- * PURPOSE:
- * 1. Detect the initial mouse position on page load (without user interaction)
- * 2. Continuously track the active mouse position and emit updates
+ * Detects initial mouse position and tracks ongoing movement, providing
+ * normalized coordinates (-1 to +1) where (0,0) is viewport center.
  *
- * WHY:
- * Browsers do not expose the cursor position until the user interacts with the page.
- * This module ensures we obtain an initial position as soon as possible and then keep
- * tracking changes efficiently.
+ * ✨ HOW IT WORKS:
+ * • Creates invisible overlay to detect initial position (no user interaction needed)
+ * • Listens to pointermove events for ongoing tracking
+ * • Converts pixel coordinates to normalized values
+ * • Emits 'init' once, then 'mousemove' continuously
  *
- * HOW:
- * 1) Initial detection:
- *    - Create a transparent full-viewport overlay element
- *    - Since the mouse cursor is already positioned somewhere on the page,
- *      the overlay will immediately trigger a 'mouseenter' event
- *    - This gives us the mouse position without waiting for user movement
- *    - Capture coordinates, emit 'init', then remove overlay and cleanup
- * 2) Active tracking:
- *    - Listen to 'pointermove' on window for ongoing position updates
- *    - Calculate normalized coordinates and emit 'mousemove' events
+ * 🔢 THE MATH:
+ * Pixel position → Percentage (÷ screen size) → Centered (- 0.5) → Normalized (× 2)
  *
- * OUTPUT:
- * Normalized coordinates in range [-1, 1] for both x and y,
- * where (0, 0) is the viewport center.
+ * 📊 EXAMPLES:
+ * • Left edge (0px): 0/1920 → 0 - 0.5 → -0.5 × 2 = -1
+ * • Center (960px): 960/1920 → 0.5 - 0.5 → 0 × 2 = 0
+ * • Right edge (1920px): 1920/1920 → 1 - 0.5 → 0.5 × 2 = 1
  *
- * THE MATH (3 Steps to Convert Pixels to Normalized Coordinates):
- *
- * STEP 1: PIXEL TO PERCENTAGE
- * Convert mouse coordinates from pixels to percentages (0 to 1 range)
- * - Formula: x/screenWidth, y/screenHeight
- * - Result: 0 = left/top edge, 0.5 = center, 1 = right/bottom edge
- *
- * STEP 2: CENTER THE COORDINATE SYSTEM
- * Shift coordinate system so center becomes (0,0) instead of (0.5,0.5)
- * - Formula: percentage - 0.5
- * - Result: -0.5 = left/top edge, 0 = center, +0.5 = right/bottom edge
- *
- * STEP 3: NORMALIZE TO FULL RANGE
- * Expand from half-range (-0.5 to +0.5) to full range (-1 to +1)
- * - Formula: centered × 2
- * - Result: -1 = left/top edge, 0 = center, +1 = right/bottom edge
- *
- * Example (1920px width, mouse at right edge):
- * Step 1: 1920/1920 = 1.0
- * Step 2: 1.0 - 0.5 = 0.5
- * Step 3: 0.5 × 2 = 1.0 (final normalized x coordinate)
+ * 🎯 OUTPUT:
+ * Normalized coordinates where:
+ * • (-1, -1) = top-left corner
+ * • (0, 0) = viewport center
+ * • (1, 1) = bottom-right corner
  */
 
 class MouseTracker extends EventEmitter {
