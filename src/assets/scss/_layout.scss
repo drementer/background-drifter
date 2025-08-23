@@ -6,6 +6,11 @@ body {
 
 html {
   overflow-x: hidden;
+  overflow-y: auto;
+
+  &.-scroll-lock {
+    overflow-y: hidden;
+  }
 }
 
 body {
