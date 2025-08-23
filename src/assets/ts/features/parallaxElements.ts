@@ -9,16 +9,16 @@ const settings = {
   scale: 0.5,
   opacity: 0,
   ease: 'back.out',
-  delay: 0.75,
+  delay: 1,
   stagger: {
     from: 'random',
     amount: 1,
   },
-};
+} as gsap.TweenVars;
 
 const animateParallaxElements = () => {
   if (!parallaxElements) return console.warn('No parallax elements found');
-  gsap.from(parallaxElements, settings as gsap.TweenVars);
+  gsap.from(parallaxElements, settings);
 };
 
 export { animateParallaxElements };

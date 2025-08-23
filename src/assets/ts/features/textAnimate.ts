@@ -11,12 +11,12 @@ const animationSettings = {
   yPercent: 100,
   duration: 0.55,
   rotation: -15,
-  delay: 0.75,
+  delay: 1,
   ease: 'power4.out',
   stagger: {
     each: 0.01,
   },
-};
+} as gsap.TweenVars;
 
 const createTextAnimation = () => {
   if (!headingElement) return console.warn('No heading element found');
