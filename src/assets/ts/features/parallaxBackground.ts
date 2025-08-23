@@ -6,46 +6,43 @@ import { intersectionObserver } from '../utils/intersectionObserver';
 /**
  * 🎨 PARALLAX MOUSE TRACKING EFFECT
  *
- * WHAT THIS DOES:
- * Creates a smooth parallax effect where the background image subtly moves
- * in the OPPOSITE direction of your mouse cursor. This creates a 3D-like
- * depth effect that makes the page feel more interactive and alive.
+ * Creates a smooth parallax effect where the background moves in the
+ * OPPOSITE direction of your mouse cursor, creating a 3D-like depth effect.
  *
- * HOW IT WORKS:
- * - Move mouse LEFT → background moves RIGHT
- * - Move mouse RIGHT → background moves LEFT
- * - Move mouse UP → background moves DOWN
- * - Move mouse DOWN → background moves UP
- * - Mouse in CENTER → background stays STILL
+ * ✨ HOW IT BEHAVES:
+ * • Move mouse LEFT → background moves RIGHT
+ * • Move mouse RIGHT → background moves LEFT
+ * • Move mouse UP → background moves DOWN
+ * • Move mouse DOWN → background moves UP
+ * • Mouse in CENTER → background stays STILL
  *
- * THE MATH BEHIND IT:
- * We need to convert mouse pixels into background movement distance.
- * This happens in 2 clear steps:
+ * 🔢 THE MATH:
+ * Mouse position (-1 to +1) × Maximum allowed shift (75%) = Movement percentage
  *
- * STEP 1: APPLY REAL MOVEMENT DISTANCE
- * Problem: -1 to +1 is just direction, we need actual percent units
- * Solution: Multiply by maxMovement to get real distance
+ * 🤔 WHY 75% MAXIMUM?
+ * • Background is 2.5x bigger than viewport
+ * • Extra space: 250% - 100% = 150%
+ * • Split equally: 150% ÷ 2 = 75% per side
+ * • This prevents edge visibility during movement
  *
- * EXAMPLES:
- * (with maxMovementX = 75)
- * - Full left (-1.0): -1.0 × 75 = -75% (background moves 75% RIGHT)
- * - Half left (-0.5): -0.5 × 75 = -37.5% (background moves 37.5% RIGHT)
- * - Center (0): 0 × 75 = 0% (background stays still)
- * - Half right (+0.5): +0.5 × 75 = +37.5% (background moves 37.5% LEFT)
- * - Full right (+1.0): +1.0 × 75 = +75% (background moves 75% LEFT)
- * Final range: -75% to +75%
+ * 📊 EXAMPLES:
+ * • Mouse at center (0): 0 × 75% = 0% → No movement
+ * • Mouse halfway right (0.5): 0.5 × 75% = 37.5% → Background moves 37.5% LEFT
+ * • Mouse fully right (1.0): 1.0 × 75% = 75% → Background moves 75% LEFT
+ * • Mouse halfway left (-0.5): -0.5 × 75% = -37.5% → Background moves 37.5% RIGHT
  *
- * STEP 2: CONVERT PERCENT TO PIXELS
- * Convert percent values to pixels for 'quickTo' compatibility
- * Problem: 'quickTo' only accepts pixels, not PERCENT
- * Solution: Convert to pixels using screenWidth/screenHeight
+ * 🔄 CONVERSION PROCESS:
+ * 1. Get normalized mouse position (-1 to +1)
+ * 2. Scale by maximum shift percentage (75%)
+ * 3. Convert percentage to pixels for GSAP
+ * 4. Apply opposite direction for parallax effect
  *
- * FINAL EXAMPLE: Mouse at right edge of 1920px screen
- * Step 1: 1.0 × 75% = 75% (final movement distance)
- * Step 2: 75% × 1920px = 1440px (final movement distance in pixels)
- * Result: Background moves 1440px (75%) to the LEFT (opposite direction)
+ * 💡 EXAMPLE CALCULATION:
+ * Mouse at 40% right (0.4) on 1920px screen:
+ * • 0.4 × 75% = 30% movement
+ * • 30% × 1920px = 576px
+ * • Background moves 576px to the LEFT
  */
-
 class ParallaxBackground {
   private readonly backgroundWrapper: HTMLElement;
   private readonly background: HTMLElement;
