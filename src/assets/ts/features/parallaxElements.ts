@@ -4,7 +4,7 @@ const parallaxElements = document.querySelectorAll(
   '[parallax-element-wrapper]'
 );
 
-const settings = {
+const settings: gsap.TweenVars = {
   duration: 0.75,
   scale: 0.5,
   opacity: 0,
@@ -14,11 +14,6 @@ const settings = {
     from: 'random',
     amount: 1,
   },
-} as gsap.TweenVars;
-
-const animateParallaxElements = () => {
-  if (!parallaxElements) return console.warn('No parallax elements found');
-  gsap.from(parallaxElements, settings);
 };
 
-export { animateParallaxElements };
+if (parallaxElements) gsap.from(parallaxElements, settings);

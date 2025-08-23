@@ -3,10 +3,10 @@ import { SplitText } from 'gsap/SplitText';
 
 gsap.registerPlugin(SplitText);
 
-const headingElement = document.querySelector('[text-animate]') as HTMLElement;
+const headingElement = document.querySelector('[text-animate]');
 const timeLine = gsap.timeline();
 
-const animationSettings = {
+const animationSettings: gsap.TweenVars = {
   autoAlpha: 0,
   yPercent: 100,
   duration: 0.55,
@@ -16,15 +16,11 @@ const animationSettings = {
   stagger: {
     each: 0.01,
   },
-} as gsap.TweenVars;
+};
 
-const createTextAnimation = () => {
-  if (!headingElement) return console.warn('No heading element found');
-
+if (headingElement) {
   const splitText = new SplitText(headingElement, { type: 'chars' });
   const { chars } = splitText;
 
   timeLine.from(chars, animationSettings);
-};
-
-export { createTextAnimation };
+}

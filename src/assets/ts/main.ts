@@ -1,9 +1,5 @@
-import { createTextAnimation } from './features/textAnimate';
-import { createParallaxBackground } from './features/parallaxBackground';
-import { createMouseParallax } from './features/parallaxMouse';
-import { hideOverlay } from './features/overlayAnimation';
-
-createTextAnimation();
-createParallaxBackground();
-createMouseParallax();
-hideOverlay();
+import './features/textAnimate';
+import './features/parallaxBackground';
+import './features/parallaxMouse';
+import './features/overlayAnimation';
+import './features/parallaxElements';

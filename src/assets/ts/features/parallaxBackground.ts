@@ -150,8 +150,4 @@ class ParallaxBackground {
   }
 }
 
-const createParallaxBackground = () => {
-  return new ParallaxBackground();
-};
-
-export { createParallaxBackground };
+new ParallaxBackground();

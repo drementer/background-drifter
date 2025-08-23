@@ -1,12 +1,12 @@
 import { gsap } from 'gsap';
 
-const element = document.querySelector('[open-overlay]') as HTMLDivElement;
+const element = document.querySelector('[open-overlay]') as HTMLElement;
 
 const lockPageScroll = (isLocked = true) => {
   document.documentElement.classList.toggle('-scroll-lock', isLocked);
 };
 
-const hideSettings = {
+const settings: gsap.TweenVars = {
   y: '-100%',
   ease: 'power3.in',
   duration: 0.75,
@@ -14,12 +14,14 @@ const hideSettings = {
   onStart: () => lockPageScroll(true),
   onComplete: () => {
     lockPageScroll(false);
-    setTimeout(() => (element!.hidden = true), 100);
+    setTimeout(() => (element.hidden = true), 100);
   },
-} as gsap.TweenVars;
-
-const hideOverlay = () => {
-  gsap.to(element, hideSettings);
 };
 
-export { hideOverlay };
+(() => {
+  if (!element) {
+    return console.warn('Overlay element not found');
+  }
+
+  gsap.to(element, settings);
+})();

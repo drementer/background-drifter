@@ -77,9 +77,4 @@ class MouseParallax {
   }
 }
 
-const createMouseParallax = () => {
-  const havePointer = window.matchMedia('(pointer:fine)').matches;
   if (havePointer) new MouseParallax();
-};
-
-export { createMouseParallax };
