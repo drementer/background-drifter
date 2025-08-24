@@ -2,7 +2,8 @@
  * GSAP type import for TypeScript support
  * Used when GSAP is loaded globally via CDN
  */
-import type { gsap } from 'gsap';
+import type { gsap as GSAPType } from 'gsap';
+declare const gsap: typeof GSAPType;
 
 import './features/textAnimate';
 import './features/parallaxBackground';
