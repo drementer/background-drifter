@@ -3,11 +3,8 @@ import { intersectionObserver } from '../utils/intersectionObserver';
 import { mouseTracker } from '../utils/mouseTracker';
 
 /**
- * 🖱️ SIMPLE MOUSE PARALLAX
- *
- * PURPOSE:
- * Lightweight mouse parallax effect with viewport optimization
- * Elements follow mouse movement only when visible in viewport
+ * Mouse Parallax Effect.
+ * See docs: /docs/PARALLAX_MOUSE.md
  */
 
 class MouseParallax {

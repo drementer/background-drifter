@@ -4,44 +4,8 @@ import { mouseTracker } from '../utils/mouseTracker';
 import { intersectionObserver } from '../utils/intersectionObserver';
 
 /**
- * 🎨 PARALLAX MOUSE TRACKING EFFECT
- *
- * Creates a smooth parallax effect where the background moves in the
- * OPPOSITE direction of your mouse cursor, creating a 3D-like depth effect.
- *
- * ✨ HOW IT BEHAVES:
- * • Move mouse LEFT → background moves RIGHT
- * • Move mouse RIGHT → background moves LEFT
- * • Move mouse UP → background moves DOWN
- * • Move mouse DOWN → background moves UP
- * • Mouse in CENTER → background stays STILL
- *
- * 🔢 THE MATH:
- * Mouse position (-1 to +1) × Maximum allowed shift (75%) = Movement percentage
- *
- * 🤔 WHY 75% MAXIMUM?
- * • Background is 2.5x bigger than viewport
- * • Extra space: 250% - 100% = 150%
- * • Split equally: 150% ÷ 2 = 75% per side
- * • This prevents edge visibility during movement
- *
- * 📊 EXAMPLES:
- * • Mouse at center (0): 0 × 75% = 0% → No movement
- * • Mouse halfway right (0.5): 0.5 × 75% = 37.5% → Background moves 37.5% LEFT
- * • Mouse fully right (1.0): 1.0 × 75% = 75% → Background moves 75% LEFT
- * • Mouse halfway left (-0.5): -0.5 × 75% = -37.5% → Background moves 37.5% RIGHT
- *
- * 🔄 CONVERSION PROCESS:
- * 1. Get normalized mouse position (-1 to +1)
- * 2. Scale by maximum shift percentage (75%)
- * 3. Convert percentage to pixels for GSAP
- * 4. Apply opposite direction for parallax effect
- *
- * 💡 EXAMPLE CALCULATION:
- * Mouse at 40% right (0.4) on 1920px screen:
- * • 0.4 × 75% = 30% movement
- * • 30% × 1920px = 576px
- * • Background moves 576px to the LEFT
+ * Parallax Background effect.
+ * See docs: /docs/PARALLAX_BACKGROUND.md
  */
 class ParallaxBackground {
   private readonly backgroundWrapper: HTMLElement;
