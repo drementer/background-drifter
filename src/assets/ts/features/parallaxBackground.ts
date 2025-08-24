@@ -1,56 +1,42 @@
 import { gsap } from 'gsap';
-import { animateParallaxElements } from './parallaxElements';
 import { mouseTracker } from '../utils/mouseTracker';
 import { intersectionObserver } from '../utils/intersectionObserver';
+import { havePointer } from '../utils/havePointer';
 
 /**
  * Parallax Background effect.
  * See docs: /docs/PARALLAX_BACKGROUND.md
  */
-class ParallaxBackground {
-  private readonly backgroundWrapper: HTMLElement;
-  private readonly background: HTMLElement;
-  private readonly gsapSettings: { duration: number; ease: string };
-  private readonly setter: { x: gsap.QuickToFunc; y: gsap.QuickToFunc };
-  private readonly maxMovement: number = 75;
 
-  // Target position (where we want the background to be)
-  private targetBackgroundX: number = 0;
-  private targetBackgroundY: number = 0;
+class ParallaxBackground {
+  private readonly maxShiftPercent = 75;
+  private readonly gsapSettings: gsap.TweenVars = {
+    duration: 2.5,
+    ease: 'expo.out',
+  };
+
+  private readonly backgroundWrapper = document.querySelector(
+    '[parallax-background-wrapper]'
+  );
+  private readonly background = this.backgroundWrapper?.querySelector(
+    '[parallax-background]'
+  );
+
+  private setter: { x: gsap.QuickToFunc; y: gsap.QuickToFunc } | undefined;
+
+  private targetBackgroundX = 0;
+  private targetBackgroundY = 0;
 
   constructor() {
-    this.backgroundWrapper = document.querySelector(
-      '[parallax-background-wrapper]'
-    ) as HTMLElement;
-
-    this.background = this.backgroundWrapper.querySelector(
-      '[parallax-background]'
-    ) as HTMLElement;
-
-    this.gsapSettings = {
-      duration: 0.75,
-      ease: 'power2.out',
-    };
+    if (!this.background) {
+      console.warn('No background element found');
+      return;
+    }
 
     this.setter = {
       x: gsap.quickTo(this.background, 'x', this.gsapSettings),
       y: gsap.quickTo(this.background, 'y', this.gsapSettings),
     };
-
-    if (!this.backgroundWrapper) {
-      console.warn(
-        "Background element with attribute '[parallax-background-wrapper]' not found!"
-      );
-      return;
-    }
-
-    if (!this.background) {
-      console.warn(
-        "Background element with attribute '[parallax-background]' not found!"
-      );
-      return;
-    }
-
     this.init();
   }
 
@@ -58,28 +44,25 @@ class ParallaxBackground {
     mouseXPosition: number,
     mouseYPosition: number
   ): void {
-    // STEP 1: APPLY REAL MOVEMENT DISTANCE
-    const horizontalMovement = mouseXPosition * this.maxMovement;
-    const verticalMovement = mouseYPosition * this.maxMovement;
+    // Scale normalized position (-1 to +1) by maximum allowed shift (75%)
+    const horizontalMovement = mouseXPosition * this.maxShiftPercent;
+    const verticalMovement = mouseYPosition * this.maxShiftPercent;
 
-    // STEP 2: CONVERT PERCENT TO PIXELS
+    // Convert movement percentage to actual pixels for GSAP
     const targetXInPx = (horizontalMovement / 100) * window.innerWidth;
     const targetYInPx = (verticalMovement / 100) * window.innerHeight;
 
-    // Set new target positions (negative for opposite direction effect)
-    // Round to whole pixels for smooth animation
+    // Apply opposite direction for parallax effect + round for smooth animation
     this.targetBackgroundX = -Math.round(targetXInPx);
     this.targetBackgroundY = -Math.round(targetYInPx);
   }
 
   private animateBackgroundToTarget(): void {
-    this.setter.x(this.targetBackgroundX);
-    this.setter.y(this.targetBackgroundY);
+    this.setter?.x(this.targetBackgroundX);
+    this.setter?.y(this.targetBackgroundY);
   }
 
-  private onMouseMove = (): void => {
-    const { x, y } = mouseTracker.getMousePosition();
-
+  private onMouseMove = ({ x, y }: { x: number; y: number }): void => {
     this.calculateMovement(x, y);
     this.animateBackgroundToTarget();
   };
@@ -93,21 +76,19 @@ class ParallaxBackground {
     }, 750);
   };
 
-  private watchIntersection = (entry: IntersectionObserverEntry): void => {
-    if (entry.isIntersecting) {
-      mouseTracker.on('mousemove', this.onMouseMove);
-    } else {
-      mouseTracker.off('mousemove', this.onMouseMove);
-    }
+  private watchIntersection = (): void => {
+    mouseTracker.toggle('mousemove', this.onMouseMove);
   };
 
   private init(): void {
-    animateParallaxElements();
     mouseTracker.on('init', this.setStartPosition);
 
-    intersectionObserver(this.backgroundWrapper, this.watchIntersection, {
-      threshold: 0.1,
-    });
+    if (!havePointer) return console.warn('Pointer not found');
+    if (!this.backgroundWrapper) {
+      return console.warn('Parallax background wrapper not found');
+    }
+
+    intersectionObserver(this.backgroundWrapper, this.watchIntersection);
   }
 }
 
