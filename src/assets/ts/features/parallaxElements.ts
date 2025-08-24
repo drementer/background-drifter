@@ -1,5 +1,3 @@
-import { gsap } from 'gsap';
-
 /**
  * Parallax Elements Animation.
  * See docs: /docs/PARALLAX_ELEMENTS.md

@@ -1,6 +1,3 @@
-import { gsap } from 'gsap';
-import { SplitText } from 'gsap/SplitText';
-
 /**
  * Text Animation Effect.
  * See docs: /docs/TEXT_ANIMATE.md

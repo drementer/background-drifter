@@ -1,4 +1,7 @@
-import { gsap } from 'gsap';
+import type { gsap as GSAPType } from 'gsap';
+
+// Global GSAP object from CDN
+declare const gsap: typeof GSAPType;
 import { mouseTracker } from '../utils/mouseTracker';
 import { intersectionObserver } from '../utils/intersectionObserver';
 import { havePointer } from '../utils/havePointer';
@@ -92,4 +95,12 @@ class ParallaxBackground {
   }
 }
 
-new ParallaxBackground();
+const initParallaxBackground = () => {
+  return new ParallaxBackground();
+};
+
+// Auto-initialize
+initParallaxBackground();
+
+export { ParallaxBackground };
+export default initParallaxBackground;

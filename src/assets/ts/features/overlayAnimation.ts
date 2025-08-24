@@ -1,5 +1,3 @@
-import { gsap } from 'gsap';
-
 /**
  * Overlay Animation Effect.
  * See docs: /docs/OVERLAY_ANIMATION.md

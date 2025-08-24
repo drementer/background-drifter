@@ -1,4 +1,3 @@
-import { gsap } from 'gsap';
 import { intersectionObserver } from '../utils/intersectionObserver';
 import { mouseTracker } from '../utils/mouseTracker';
 import { havePointer } from '../utils/havePointer';
@@ -11,8 +10,10 @@ import { havePointer } from '../utils/havePointer';
 class MouseParallax {
   private elements: NodeListOf<HTMLElement>;
   private visibleElements: Set<HTMLElement> = new Set();
-  private elementSetters: Map<HTMLElement, { x: gsap.QuickToFunc; y: gsap.QuickToFunc }> =
-    new Map();
+  private elementSetters: Map<
+    HTMLElement,
+    { x: gsap.QuickToFunc; y: gsap.QuickToFunc }
+  > = new Map();
 
   constructor(selector: string = '[mouse-parallax]') {
     this.elements = document.querySelectorAll(selector);
@@ -73,4 +74,16 @@ class MouseParallax {
   }
 }
 
-if (havePointer) new MouseParallax();
+const initMouseParallax = (selector: string = '[mouse-parallax]') => {
+  if (havePointer) {
+    return new MouseParallax(selector);
+  }
+  console.warn('Mouse parallax requires pointer device');
+  return null;
+};
+
+// Auto-initialize
+initMouseParallax();
+
+export { MouseParallax };
+export default initMouseParallax;
