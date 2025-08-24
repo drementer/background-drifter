@@ -19,11 +19,18 @@ export default defineConfig({
     manifest: false,
     rollupOptions: {
       input: 'src/index.html',
+      // External dependencies - exclude from bundle, use CDN instead
+      external: ['gsap', 'gsap/SplitText'],
       output: {
         // Clean asset naming
         assetFileNames: 'assets/[name]-[hash][extname]',
         chunkFileNames: 'assets/[name]-[hash].js',
         entryFileNames: 'assets/[name]-[hash].js',
+        // Global variable mapping for external dependencies
+        globals: {
+          'gsap': 'gsap',
+          'gsap/SplitText': 'SplitText'
+        }
       },
     },
   },
