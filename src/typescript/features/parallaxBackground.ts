@@ -1,7 +1,3 @@
-import type { gsap as GSAPType } from 'gsap';
-
-// Global GSAP object from CDN
-declare const gsap: typeof GSAPType;
 import { mouseTracker } from '../utils/mouseTracker';
 import { intersectionObserver } from '../utils/intersectionObserver';
 import { havePointer } from '../utils/havePointer';

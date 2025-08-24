@@ -74,4 +74,4 @@ class MouseParallax {
   }
 }
 
-new MouseParallax();
+if (havePointer) new MouseParallax();
