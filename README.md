@@ -15,17 +15,17 @@ A modern, high-performance web experience featuring multiple layered parallax ef
 
 ### 🎭 **Multi-Layer Parallax Effects**
 
-- **Background parallax** - CSS background movement with opposite-direction motion and safety boundaries → [📚 Parallax Background Docs](src/docs/PARALLAX_BACKGROUND.md)
-- **Element parallax** - Multiple elements with individual movement speeds → [📚 Parallax Elements Docs](src/docs/PARALLAX_ELEMENTS.md)
-- **Mouse parallax** - Direct cursor-following effects for interactive elements → [📚 Mouse Parallax Docs](src/docs/PARALLAX_MOUSE.md)
+- **Background parallax** - CSS background movement with opposite-direction motion and safety boundaries → [📚 Parallax Background Docs](docs/PARALLAX_BACKGROUND.md)
+- **Element parallax** - Multiple elements with individual movement speeds → [📚 Parallax Elements Docs](docs/PARALLAX_ELEMENTS.md)
+- **Mouse parallax** - Direct cursor-following effects for interactive elements → [📚 Mouse Parallax Docs](docs/PARALLAX_MOUSE.md)
 - **Intersection optimization** - Only animates visible elements for better performance
 
 ### 🚀 **Smooth Animations**
 
 - **GSAP-powered** - Industry-standard animation library for 60fps performance
 - **Custom easing** - Expo.out and other professional easing functions
-- **Text animations** - Character-by-character reveal effects → [📚 Text Animate Docs](src/docs/TEXT_ANIMATE.md)
-- **Overlay transitions** - Smooth loading screen animations → [📚 Overlay Animation Docs](src/docs/OVERLAY_ANIMATION.md)
+- **Text animations** - Character-by-character reveal effects → [📚 Text Animate Docs](docs/TEXT_ANIMATE.md)
+- **Overlay transitions** - Smooth loading screen animations → [📚 Overlay Animation Docs](docs/OVERLAY_ANIMATION.md)
 
 ### ⚡ **Performance Features**
 
@@ -109,11 +109,11 @@ npm run preview
 
 Detailed documentation for each feature is available in the docs folder:
 
-- [🎯 Overlay Animation](src/docs/OVERLAY_ANIMATION.md) - Automatic overlay closing animation
-- [🎯 Parallax Background](src/docs/PARALLAX_BACKGROUND.md) - Mouse tracking background effect
-- [🎯 Parallax Elements](src/docs/PARALLAX_ELEMENTS.md) - Entrance animation for multiple elements
-- [🎯 Mouse Parallax](src/docs/PARALLAX_MOUSE.md) - Mouse-following parallax effects
-- [🎯 Text Animation](src/docs/TEXT_ANIMATE.md) - Character-by-character text reveal
+- [🎯 Overlay Animation](docs/OVERLAY_ANIMATION.md) - Automatic overlay closing animation
+- [🎯 Parallax Background](docs/PARALLAX_BACKGROUND.md) - Mouse tracking background effect
+- [🎯 Parallax Elements](docs/PARALLAX_ELEMENTS.md) - Entrance animation for multiple elements
+- [🎯 Mouse Parallax](docs/PARALLAX_MOUSE.md) - Mouse-following parallax effects
+- [🎯 Text Animation](docs/TEXT_ANIMATE.md) - Character-by-character text reveal
 
 ## 🎯 Configuration
 
@@ -179,31 +179,31 @@ Movement Percentage ÷ 100 × Viewport Size = Pixel Distance
 
 ## ✨ Features in Detail
 
-### Background Parallax → [📚 Full Documentation](src/docs/PARALLAX_BACKGROUND.md)
+### Background Parallax → [📚 Full Documentation](docs/PARALLAX_BACKGROUND.md)
 
 - **Moves CSS background** opposite to mouse direction for depth illusion
 - **Safety boundaries** prevent background edges from becoming visible
 - **Smooth exponential easing** for natural feel
 
-### Element Parallax → [📚 Full Documentation](src/docs/PARALLAX_ELEMENTS.md)
+### Element Parallax → [📚 Full Documentation](docs/PARALLAX_ELEMENTS.md)
 
 - **Multiple elements** with staggered animations
 - **Configurable movement** distances and delays
 - **Automatic cleanup** and optimization
 
-### Text Animations → [📚 Full Documentation](src/docs/TEXT_ANIMATE.md)
+### Text Animations → [📚 Full Documentation](docs/TEXT_ANIMATE.md)
 
 - **Character-by-character** reveal effects
 - **Rotation and opacity** transitions
 - **SplitText integration** for advanced typography
 
-### Mouse Parallax → [📚 Full Documentation](src/docs/PARALLAX_MOUSE.md)
+### Mouse Parallax → [📚 Full Documentation](docs/PARALLAX_MOUSE.md)
 
 - **Lightweight mouse-following** parallax effect
 - **Viewport optimization** with Intersection Observer
 - **Performance optimized** for smooth animation
 
-### Loading Overlay → [📚 Full Documentation](src/docs/OVERLAY_ANIMATION.md)
+### Loading Overlay → [📚 Full Documentation](docs/OVERLAY_ANIMATION.md)
 
 - **Smooth entrance** and exit transitions
 - **Scroll locking** during transitions

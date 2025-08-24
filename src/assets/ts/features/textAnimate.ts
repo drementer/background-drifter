@@ -1,6 +1,6 @@
 /**
  * Text Animation Effect.
- * See docs: /docs/TEXT_ANIMATE.md
+ * See docs: docs/TEXT_ANIMATE.md
  */
 
 gsap.registerPlugin(SplitText);

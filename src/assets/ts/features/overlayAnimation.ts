@@ -1,6 +1,6 @@
 /**
  * Overlay Animation Effect.
- * See docs: /docs/OVERLAY_ANIMATION.md
+ * See docs: docs/OVERLAY_ANIMATION.md
  */
 
 const element = document.querySelector('[open-overlay]') as HTMLElement;

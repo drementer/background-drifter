@@ -8,7 +8,7 @@ import { havePointer } from '../utils/havePointer';
 
 /**
  * Parallax Background effect.
- * See docs: /docs/PARALLAX_BACKGROUND.md
+ * See docs: docs/PARALLAX_BACKGROUND.md
  */
 
 class ParallaxBackground {
@@ -95,12 +95,4 @@ class ParallaxBackground {
   }
 }
 
-const initParallaxBackground = () => {
-  return new ParallaxBackground();
-};
-
-// Auto-initialize
-initParallaxBackground();
-
-export { ParallaxBackground };
-export default initParallaxBackground;
+new ParallaxBackground();

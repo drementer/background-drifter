@@ -1,6 +1,6 @@
 /**
  * Parallax Elements Animation.
- * See docs: /docs/PARALLAX_ELEMENTS.md
+ * See docs: docs/PARALLAX_ELEMENTS.md
  */
 
 const parallaxElements = document.querySelectorAll(

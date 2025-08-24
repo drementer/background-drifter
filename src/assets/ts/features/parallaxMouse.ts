@@ -4,7 +4,7 @@ import { havePointer } from '../utils/havePointer';
 
 /**
  * Mouse Parallax Effect.
- * See docs: /docs/PARALLAX_MOUSE.md
+ * See docs: docs/PARALLAX_MOUSE.md
  */
 
 class MouseParallax {
@@ -74,16 +74,4 @@ class MouseParallax {
   }
 }
 
-const initMouseParallax = (selector: string = '[mouse-parallax]') => {
-  if (havePointer) {
-    return new MouseParallax(selector);
-  }
-  console.warn('Mouse parallax requires pointer device');
-  return null;
-};
-
-// Auto-initialize
-initMouseParallax();
-
-export { MouseParallax };
-export default initMouseParallax;
+new MouseParallax();
