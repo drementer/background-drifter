@@ -1,6 +1,7 @@
 import { gsap } from 'gsap';
 import { intersectionObserver } from '../utils/intersectionObserver';
 import { mouseTracker } from '../utils/mouseTracker';
+import { havePointer } from '../utils/havePointer';
 
 /**
  * Mouse Parallax Effect.
@@ -10,7 +11,7 @@ import { mouseTracker } from '../utils/mouseTracker';
 class MouseParallax {
   private elements: NodeListOf<HTMLElement>;
   private visibleElements: Set<HTMLElement> = new Set();
-  private elementSetters: Map<HTMLElement, { x: Function; y: Function }> =
+  private elementSetters: Map<HTMLElement, { x: gsap.QuickToFunc; y: gsap.QuickToFunc }> =
     new Map();
 
   constructor(selector: string = '[mouse-parallax]') {
@@ -28,14 +29,13 @@ class MouseParallax {
 
   private setupObservers(): void {
     const createElementSetters = (element: HTMLElement) => {
-      const xSetter = gsap.quickTo(element, 'x', {
-        duration: 0.6,
-        ease: 'power2.out',
-      });
-      const ySetter = gsap.quickTo(element, 'y', {
-        duration: 0.6,
-        ease: 'power2.out',
-      });
+      const settings: gsap.TweenVars = {
+        duration: 2.5,
+        ease: 'expo.out',
+      };
+
+      const xSetter = gsap.quickTo(element, 'x', settings);
+      const ySetter = gsap.quickTo(element, 'y', settings);
 
       // Store setters for this element
       this.elementSetters.set(element, { x: xSetter, y: ySetter });
@@ -52,14 +52,13 @@ class MouseParallax {
 
     const setUpElement = (element: HTMLElement) => {
       createElementSetters(element);
-      intersectionObserver(element, onIntersection, { threshold: 0.1 });
+      intersectionObserver(element, onIntersection);
     };
 
     this.elements.forEach(setUpElement);
   }
 
-  private animateVisibleElements(position: { x: number; y: number }): void {
-    const { x, y } = position;
+  private animateVisibleElements({ x, y }: { x: number; y: number }): void {
     const xMovement = x * 20;
     const yMovement = y * 20;
 
@@ -74,4 +73,4 @@ class MouseParallax {
   }
 }
 
-  if (havePointer) new MouseParallax();
+if (havePointer) new MouseParallax();
