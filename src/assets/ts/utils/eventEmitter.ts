@@ -1,40 +1,46 @@
+type EventCallback = (...args: any[]) => void;
+type EventMap = Map<string, EventCallback[]>;
+
 class EventEmitter {
-  #events = new Map();
+  private readonly events: EventMap = new Map();
 
-  private validateParams(eventName: string, callback: Function) {
-    if (typeof eventName !== 'string') {
-      return console.warn('Event name must be a string');
+  on(eventName: string, callback: EventCallback): this {
+    if (!this.events.has(eventName)) {
+      this.events.set(eventName, []);
     }
-    if (typeof callback !== 'function') {
-      return console.warn('Callback must be a function');
-    }
-  }
 
-  on(eventName: string, callback: Function) {
-    this.validateParams(eventName, callback);
-
-    if (!this.#events.has(eventName)) {
-      this.#events.set(eventName, []);
-    }
-    this.#events.get(eventName).push(callback);
+    const listeners = this.events.get(eventName)!;
+    listeners.push(callback);
     return this;
   }
 
-  off(eventName: string, callback: Function) {
-    this.validateParams(eventName, callback);
+  off(eventName: string, callback: EventCallback): this {
+    if (!this.events.has(eventName)) return this;
 
-    if (!this.#events.has(eventName)) return this;
+    const listeners = this.events.get(eventName)!;
+    const filteredListeners = listeners.filter((listener) => {
+      return listener !== callback;
+    });
+    this.events.set(eventName, filteredListeners);
 
-    const listeners = this.#events.get(eventName);
-    this.#events.set(
-      eventName,
-      listeners.filter((listener: Function) => listener !== callback)
-    );
     return this;
   }
 
-  once(eventName: string, callback: Function) {
-    const oneTimeListener = (...args: any[]) => {
+  toggle(eventName: string, callback: EventCallback): this {
+    const listeners = this.events.get(eventName) || [];
+    const hasThisCallback = listeners.includes(callback);
+
+    if (hasThisCallback) {
+      this.off(eventName, callback);
+    } else {
+      this.on(eventName, callback);
+    }
+
+    return this;
+  }
+
+  once(eventName: string, callback: EventCallback): this {
+    const oneTimeListener: EventCallback = (...args: any[]) => {
       callback(...args);
       this.off(eventName, oneTimeListener);
     };
@@ -42,20 +48,17 @@ class EventEmitter {
     return this.on(eventName, oneTimeListener);
   }
 
-  emit(eventName: string, ...args: any[]) {
-    if (typeof eventName !== 'string') {
-      return console.warn('Event name must be a string');
-    }
+  emit(eventName: string, ...args: any[]): boolean {
+    const handlers = this.events.get(eventName);
 
-    const handlers = this.#events.get(eventName);
     if (!handlers?.length) return false;
 
-    handlers.forEach((callback: Function) => callback(...args));
+    handlers.forEach((callback) => callback(...args));
     return true;
   }
 
-  get events() {
-    return Object.fromEntries(this.#events);
+  get eventList() {
+    return Object.fromEntries(this.events);
   }
 }
 
