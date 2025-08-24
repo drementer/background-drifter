@@ -2,30 +2,8 @@ import { EventEmitter } from './eventEmitter';
 import { havePointer } from './havePointer';
 
 /**
- * 🖱️ MOUSE TRACKER
- *
- * Detects initial mouse position and tracks ongoing movement, providing
- * normalized coordinates (-1 to +1) where (0,0) is viewport center.
- *
- * ✨ HOW IT WORKS:
- * • Creates invisible overlay to detect initial position (no user interaction needed)
- * • Listens to pointermove events for ongoing tracking
- * • Converts pixel coordinates to normalized values
- * • Emits 'init' once, then 'mousemove' continuously
- *
- * 🔢 THE MATH:
- * Pixel position → Percentage (÷ screen size) → Centered (- 0.5) → Normalized (× 2)
- *
- * 📊 EXAMPLES:
- * • Left edge (0px): 0/1920 → 0 - 0.5 → -0.5 × 2 = -1
- * • Center (960px): 960/1920 → 0.5 - 0.5 → 0 × 2 = 0
- * • Right edge (1920px): 1920/1920 → 1 - 0.5 → 0.5 × 2 = 1
- *
- * 🎯 OUTPUT:
- * Normalized coordinates where:
- * • (-1, -1) = top-left corner
- * • (0, 0) = viewport center
- * • (1, 1) = bottom-right corner
+ * Mouse Tracker.
+ * See docs: docs/MOUSE_TRACKER.md
  */
 
 class MouseTracker extends EventEmitter {
