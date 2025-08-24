@@ -1,6 +1,6 @@
-# 🎯 Parallax Mouse Tracking Effect
+# 🎯 Parallax Background Effect
 
-Creates a smooth parallax effect where the background moves in the **OPPOSITE** direction of your mouse cursor, creating a 3D-like depth effect.
+Creates a smooth parallax effect where the background element moves in the **OPPOSITE** direction of your mouse cursor, creating a 3D-like depth effect using CSS background properties.
 
 ## ✨ How It Behaves
 
@@ -18,10 +18,10 @@ Mouse position (-1 to +1) × Maximum allowed shift (75%) = Movement percentage
 
 ## 🤔 Why 75% Maximum?
 
-- Background is **2.5x bigger** than viewport
+- Background element is **2.5x bigger** than viewport
 - Extra space: `250% - 100% = 150%`
 - Split equally: `150% ÷ 2 = 75%` per side
-- This **prevents edge visibility** during movement
+- This **prevents background boundaries** from becoming visible during movement
 
 ## 📊 Examples
 
@@ -51,7 +51,8 @@ Background moves 576px to the LEFT
 
 ## 🛠️ Implementation Notes
 
-- Uses `gsap.quickTo()` for smooth 60fps animation
-- Requires normalized mouse coordinates from `MouseTracker`
-- Intersection Observer for performance optimization
-- Auto-initializes via side-effect import pattern
+- **CSS Background Animation** - Moves background properties (gradients, colors) not images
+- **Uses `gsap.quickTo()`** for smooth 60fps animation
+- **Requires normalized coordinates** from `MouseTracker`
+- **Intersection Observer** for performance optimization
+- **Auto-initializes** via side-effect import pattern
