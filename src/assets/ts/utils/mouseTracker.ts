@@ -90,7 +90,7 @@ class MouseTracker extends EventEmitter {
         listenerOptions
       );
 
-      setTimeout(returnMousePosition, 750);
+      setTimeout(returnMousePosition, 1_000);
     });
   }
 
