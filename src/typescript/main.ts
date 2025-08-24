@@ -1,6 +1,6 @@
 /**
- * This module sets up TypeScript type safety for GSAP when it's loaded globally
- * via CDN or script tag rather than as an npm package.
+ * GSAP type import for TypeScript support
+ * Used when GSAP is loaded globally via CDN
  */
 import type { gsap } from 'gsap';
 
