@@ -1,4 +1,5 @@
 import { EventEmitter } from './eventEmitter';
+import { havePointer } from './havePointer';
 
 /**
  * 🖱️ MOUSE TRACKER
@@ -29,7 +30,7 @@ import { EventEmitter } from './eventEmitter';
 
 class MouseTracker extends EventEmitter {
   private overlayElement: HTMLElement | null = null;
-  private mousePosition: { x: number; y: number } = { x: 0, y: 0 };
+  public mousePosition: { x: number; y: number } = { x: 0, y: 0 };
 
   constructor() {
     super();
@@ -93,10 +94,6 @@ class MouseTracker extends EventEmitter {
     });
   }
 
-  public getMousePosition(): { x: number; y: number } {
-    return this.mousePosition;
-  }
-
   private calculateMovement(x: number, y: number): void {
     const screenWidth = window.innerWidth;
     const screenHeight = window.innerHeight;
@@ -119,7 +116,7 @@ class MouseTracker extends EventEmitter {
   }
 
   private watchMousePosition(): void {
-    const calculateAndEmitMousePosition = (event: MouseEvent) => {
+    const calculateAndEmitMousePosition = (event: PointerEvent) => {
       this.calculateMovement(event.clientX, event.clientY);
       this.emit('mousemove', this.mousePosition);
     };
@@ -127,6 +124,11 @@ class MouseTracker extends EventEmitter {
   }
 
   private init(): void {
+    if (!havePointer) {
+      this.emit('init', this.mousePosition);
+      return;
+    }
+
     this.setInitialMousePosition();
     this.watchMousePosition();
   }
